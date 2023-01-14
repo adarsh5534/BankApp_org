@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -6,65 +9,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-aim="your perfect banking parter"
-data="enter account number"
-acno=''
-psw=''
-  userDetails:any={
-    1000:{acno:1000,username:"anu",password:123,balance:0},
-    1001:{acno:1001,username:"megha",password:123,balance:0},
-    1002:{acno:1002,username:"vidhya",password:123,balance:0},
-    1003:{acno:1003,username:"vimal",password:123,balance:0}
-  }
-  constructor(){}
+  aim = "your perfect banking partner"
+  data = "enter account number"
+  // acno = ''
+  // psw = ''
+
+  constructor(private router: Router, private ds: DataService, private fb: FormBuilder) { }
+  loginForm = this.fb.group({
+    acno: ['',[Validators.required,Validators.pattern('[0-9]+')]],
+    psw: ['',[Validators.required,Validators.pattern('[0-9]+')]]
+  })
+
   ngOnInit(): void {
-    
+
   }
-  // login(){
-  //   var acno=this.acno
-  //   var psw =this.psw
-  //   var userDetails=this.userDetails
+  login() {
+    var acno = this.loginForm.value.acno
+    var psw = this.loginForm.value.psw
 
-  //   if(acno  in userDetails){
-  //     if(psw==userDetails[acno]["password"]){
-  //       alert('login success')
+    if (this.loginForm.valid) {
+      this.ds.login(acno, psw).subscribe((result: any) => {
 
-  //     }else{
-  //       alert('incorrect password')
-  //     }
-  //   }else{
-  //     alert('incorrect account number')
-  //   }
+        localStorage.setItem('currentacno', JSON.stringify(result.currentAcno))
+       
+        
+        localStorage.setItem('currentuser', JSON.stringify(result.currentUser))
+        localStorage.setItem('token', JSON.stringify(result.token))
 
-  // }
-  login(a:any,b:any){
 
-    this.acno=a.value
-    this.psw=b.value
-    var acno=this.acno
-    var psw =this.psw
-    var userDetails=this.userDetails
+        alert(result.message)
+        this.router.navigateByUrl('dashboard')
+      },
+        result => {
+          alert(result.error.message)
+        }
+      )
 
-    if(acno  in userDetails){
-      if(psw==userDetails[acno]["password"]){
-        alert('login success')
-
-      }else{
-        alert('incorrect password')
-      }
-    }else{
-      alert('incorrect account number')
     }
-
+    else {
+      alert('invalid form')
+    }
   }
-  // this method  works first!
-//   acnoChange(event:any){
-//  this.acno=event.target.value
-  
-//   }
-//   pswChange(event:any){
-//     this.psw =event.target.value
-//     console.log(this.psw);
-    
-//   }
 }
+

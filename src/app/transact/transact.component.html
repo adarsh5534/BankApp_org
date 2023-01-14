@@ -1,0 +1,26 @@
+<div class="text-center text-white  ">
+    <div  class="container mt-5  p-3 w-50 border p-2 border-opacity-10  rounded-4 border-info border-4" style=" background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    ">
+        <h1>Transaction Details</h1>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Amount</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of transaction">
+        
+        <td>{{i.type}}</td>
+           
+        <td>{{i.amount}}</td>
+       
+      </tr>
+     
+      
+     
+    </tbody>
+  </table>

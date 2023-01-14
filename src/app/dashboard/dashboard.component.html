@@ -1,0 +1,59 @@
+<h1 class="text-white text-center">Welcome {{user}}</h1>
+<h4 class="text-white text-center">{{dateandtime | date :'short'}}</h4>
+<a  class="text-white border rounded p-2 " routerLink="/transact" style="text-decoration:none ">view transaction history</a>
+<!-- / used to back the page from dashboard to login -->
+<div class="text-end p-3">
+    <button type="submit" (click)="logout()" class="btn btn-danger">Log out</button>
+</div>
+<div class="text-end p-3">
+    <button type="submit" (click)="deleteconfirm()" class="btn btn-danger">delete</button>
+</div>
+<app-deleteconfirm (onDelete)="delete($event)" (onCancel)="oncancel()" [item]="acno"></app-deleteconfirm>
+<form [ngClass]="acno?'style':''" (ngSubmit)="deposit()" [formGroup]="depositForm">
+    
+<div  class="container mt-4  p-3 w-50 border p-2 border-opacity-10  rounded-4 border-info border-4" style=" background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+">
+    <h1 class="text-center text-white">Deposit</h1>
+  
+        <div class="form-group">
+            <input id="acid1" name="acno" formControlName="acno" type="text" class="form-control item item  my-3 p-2" placeholder="account number">
+        </div>
+        <div class="form-group">
+            <input id="pid1" name="psw" formControlName="psw" type="password" class="form-control item my-3 p-2 " placeholder="password">
+        </div>
+        <div class="form-group">
+            <input id="amt1" name="amt" formControlName="amnt" type="text" class="form-control item my-3 p-2 " placeholder="amount">
+        </div >
+      
+            <button type="submit"  class="btn btn-success " >Deposit</button><br><br>
+ 
+
+
+</div>
+</form>
+
+
+
+<form [ngClass]="acno?'style':''" (ngSubmit)="withdraw()" [formGroup]="withdrawForm">
+    <div class="container mt-3  p-3 w-50 border p-2 border-opacity-10  rounded-4 border-info border-4" style=" background-color: rgb(0,0,0); /* Fallback color */
+background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+">
+
+<h1 class="text-center text-white">Withdraw</h1>
+
+    <div >
+        <input id="acid2" formControlName="acno1" name="acno" type="text" class="form-control item item  my-3 p-2" placeholder="account number">
+    </div>
+    <div >
+        <input id="pid2"  formControlName="psw1" name="psw" type="password" class="form-control item my-3 p-2 " placeholder="password">
+    </div>
+    <div >
+        <input id="amt2"  formControlName="amnt1" name="amt" type="text" class="form-control item my-3 p-2 " placeholder="amount">
+    </div>
+  
+        <button type="submit "   class="btn btn-success " >withdraw</button><br><br>
+
+<!-- no repeat id only unique name -->
+</div>
+</form>
